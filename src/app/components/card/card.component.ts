@@ -19,7 +19,7 @@ export class CardComponent {
   constructor(private workspaceService: WorkspaceService) {  }
 
   public onClick = () => {
-    this.workspaceService.activateWorkspace(this.route);
+    this.workspaceService.openWorkspace(this.title, this.route, true)
   }
 
   public onClose = () => {
