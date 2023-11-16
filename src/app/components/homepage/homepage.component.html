@@ -1,4 +1,8 @@
-<h2 class="text-xl font-semibold">Select a person</h2>
-<div *ngFor="let person of personData;" class="hover:opacity-60 cursor-pointer">
-    <p (click)="onClick(person)">{{ person.name }}</p>
+<div class="text-xl text-slate-900">
+    <h2 class="mb-2 text-3xl font-semibold">Select a person</h2>
+    <div class="flex gap-4">
+        <div *ngFor="let person of personData;" class="p-4 bg-slate-300 hover:opacity-60 cursor-pointer">
+            <p (click)="onClick(person)">{{ person.name }}</p>
+        </div>
+    </div>
 </div>
