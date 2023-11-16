@@ -1,7 +1,3 @@
 <div class="h-28 p-4 flex gap-4 items-stretch bg-slate-800 border-gray-400">
-    <app-card title="Overview" [isClosable]="false" [isActive]="true" [onClickCallback]="onClickCallback"></app-card>
-    <app-card title="Jan Jansen Johansen VII" [isClosable]="true" [isActive]="false"
-        [onClickCallback]="onClickCallback"></app-card>
-    <app-card title="Erik Erikson" [isClosable]="true" [isActive]="false"
-        [onClickCallback]="onClickCallback"></app-card>
+    <app-card *ngFor="let workspace of workspaces;" title="{{workspace.name}}" route="{{workspace.route}}" [isClosable]="workspace.isClosable" [isActive]="workspace.isActive"></app-card>
 </div>

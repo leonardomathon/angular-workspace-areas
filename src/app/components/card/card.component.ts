@@ -1,5 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
+import { WorkspaceService } from '../../services/workspace.service';
 
 @Component({
   selector: 'app-card',
@@ -10,14 +12,17 @@ import { CommonModule } from '@angular/common';
 })
 export class CardComponent {
   @Input() title: string;
+  @Input() route: string;
   @Input() isClosable: boolean;
   @Input() isActive: boolean;
-  @Input() onClickCallback: () => void;
 
-  constructor() {  }
+  constructor(private workspaceService: WorkspaceService) {  }
+
+  public onClick = () => {
+    this.workspaceService.activateWorkspace(this.route);
+  }
 
   public onClose = () => {
-    // TODO: add closing logic
-    console.log("Close button clicked")
+    this.workspaceService.closeWorkspace(this.route);
   }
 }

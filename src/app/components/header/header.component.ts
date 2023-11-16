@@ -1,6 +1,8 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CardComponent } from '../card/card.component';
+import { WorkspaceService } from '../../services/workspace.service';
+import { Workspaces } from '../../models/workspace';
 
 @Component({
   selector: 'app-header',
@@ -9,8 +11,14 @@ import { CardComponent } from '../card/card.component';
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
 })
-export class HeaderComponent {
-  public onClickCallback = () => {
-    console.log("On click callback function");
+export class HeaderComponent implements OnInit {
+  public workspaces: Workspaces;
+
+  constructor(private workspaceService: WorkspaceService) {}
+
+  ngOnInit(): void {
+    this.workspaceService.getWorkspaces().subscribe(workspaces => {
+      this.workspaces = workspaces;
+    })
   }
 }

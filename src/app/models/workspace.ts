@@ -1,7 +1,8 @@
 export type Workspaces = Workspace[];
 
 export type Workspace = {
-    id: string;
     name: string;
-    path: string;
+    route: string;
+    isClosable: boolean;
+    isActive: boolean;
 }
