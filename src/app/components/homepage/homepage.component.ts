@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
 import { persons } from '../../data/stub';
 import { Person, Persons } from '../../models/person';
 import { WorkspaceService } from '../../services/workspace.service';
