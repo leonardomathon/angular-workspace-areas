@@ -69,16 +69,22 @@ export class WorkspaceService {
   }
 
   public closeWorkspace = (route: string) => {
-    const workspace = this.workspaces.value.find(item => item.route === route)
+    const workspaceIndex = this.workspaces.value.findIndex(item => item.route === route)
 
     // If route is not found in list of workspaces, do nothing
-    if (!workspace) {
+    if (workspaceIndex < 0) {
       return;
     }
 
-    // Remote workspace from state and goto main page
+    // If workspace is currently active, remove workspace from state and goto previous workspace
+    if (this.workspaces.value[workspaceIndex].isActive) {
+      // Open activate neighbor workspace, or if that does not exist open the main route
+      const neighborWorkspaceLeft = this.workspaces.value[workspaceIndex - 1];
+      this.activateWorkspace(neighborWorkspaceLeft ? neighborWorkspaceLeft.route : '/');
+    }
+
+    // Remove workspace
     this.workspaces.next(this.workspaces.value.filter(item => item.route !== route));
-    this.activateWorkspace('');
 
     // Update local storage
     this.saveWorkspaces();
