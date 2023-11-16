@@ -90,6 +90,7 @@ export class WorkspaceService {
     // If nothing in localstorage, save default workspace
     if (!data) {
       this.saveWorkspaces();
+      return;
     }
 
     // Set all workspaces to inactive, except for the current route
