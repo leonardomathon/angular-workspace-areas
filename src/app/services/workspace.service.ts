@@ -12,19 +12,14 @@ export class WorkspaceService {
   ])
 
   constructor(private router: Router) { 
-    // TODO: on init read workspaces stored in localstorage
-    // TODO: set default workspace to be always open
+    this.loadWorkspaces();
   }
 
-  public getWorkspaces: () => BehaviorSubject<Workspaces> = () => {
+  public getWorkspacesObservable: () => BehaviorSubject<Workspaces> = () => {
     return this.workspaces;
   }
 
-  public getActiveWorkspace: () => Workspace = () => {
-    return this.workspaces.value.filter(item => item.isActive)[0];
-  }
-
-  public createWorkspace = (name: string, route: string, isClosable: boolean) => {
+  public openWorkspace = (name: string, route: string, isClosable: boolean) => {
     // If workspace already exists, activate it
     const workspace = this.workspaces.value.find(item => item.route === route)
 
@@ -39,7 +34,9 @@ export class WorkspaceService {
     }
     this.workspaces.next([...this.workspaces.value, newWorkspace]);
     this.activateWorkspace(newWorkspace.route);
-    // TODO: update localstorage
+    
+    // Update local storage
+    this.saveWorkspaces();
   }
 
   public activateWorkspace = (route: string) => {
@@ -66,6 +63,9 @@ export class WorkspaceService {
 
       this.workspaces.next(newWorkspaces);
     }
+
+    // Update local storage
+    this.saveWorkspaces();
   }
 
   public closeWorkspace = (route: string) => {
@@ -80,6 +80,28 @@ export class WorkspaceService {
     this.workspaces.next(this.workspaces.value.filter(item => item.route !== route));
     this.activateWorkspace('');
 
-    // TODO: update localstorage
+    // Update local storage
+    this.saveWorkspaces();
+  }
+
+  private loadWorkspaces = () => {
+    const data = localStorage.getItem("workspaces");
+
+    // If nothing in localstorage, save default workspace
+    if (!data) {
+      this.saveWorkspaces();
+    }
+
+    // Set all workspaces to inactive, except for the current route
+    const workspaceObject = (JSON.parse(data as string) as Workspaces).map(item => {
+      item.isActive = item.route === this.router.routerState.snapshot.url;
+      return item
+    });  
+
+    this.workspaces.next(workspaceObject);
+  }
+
+  private saveWorkspaces = () => {
+    localStorage.setItem("workspaces", JSON.stringify(this.workspaces.value));
   }
 }

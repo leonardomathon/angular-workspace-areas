@@ -22,6 +22,6 @@ export class HomepageComponent {
   }
 
   public onClick = (person: Person) => {
-    this.workspaceService.createWorkspace(person.name, `persons/${person.id}`, true);
+    this.workspaceService.openWorkspace(person.name, `persons/${person.id}`, true);
   }
 }

@@ -28,7 +28,7 @@ export class PersonpageComponent implements OnInit {
       this.personData = person;
 
       // Try to create workspace
-      this.workspaceService.createWorkspace(person.name, `persons/${person.id}`, true);
+      this.workspaceService.openWorkspace(person.name, `persons/${person.id}`, true);
     })
   }
 }

@@ -17,7 +17,7 @@ export class HeaderComponent implements OnInit {
   constructor(private workspaceService: WorkspaceService) {}
 
   ngOnInit(): void {
-    this.workspaceService.getWorkspaces().subscribe(workspaces => {
+    this.workspaceService.getWorkspacesObservable().subscribe(workspaces => {
       this.workspaces = workspaces;
     })
   }
